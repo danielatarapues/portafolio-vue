@@ -131,7 +131,7 @@
   .form-input:focus,
   .form-textarea:focus {
     outline: none;
-    border-color: var(--accent-purple);
+    border-color: var(--color-accent-purple);
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
   }
 
