@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import { computed, type Component } from 'vue'
-  import { Menu, X, Moon, Sun } from 'lucide-vue-next'
+  import { computed } from 'vue'
   import { useDark } from '@vueuse/core'
 
   import BaseToggle from '@/common/components/BaseToggle.vue'
@@ -8,7 +7,9 @@
   import LogoWhite from '@/assets/logos/logowhite.svg'
   import LogoDark from '@/assets/logos/logodark.svg'
 
-  const ThemeIcon = computed<Component>(() => (isDark.value ? Moon : Sun))
+  const themeIconClass = computed(() =>
+    isDark.value ? 'pi pi-moon' : 'pi pi-sun'
+  )
 
   type SectionName = 'inicio' | 'tecnologías' | 'experiencia' | 'footer'
 
@@ -98,7 +99,7 @@
               <span>Modo {{ isDark ? 'Oscuro' : 'Claro' }}</span>
               <BaseToggle v-model="isDark">
                 <template #icon>
-                  <component :is="ThemeIcon" :size="14" />
+                  <i :class="themeIconClass" style="font-size: 0.8rem"></i>
                 </template>
               </BaseToggle>
             </div>
@@ -108,16 +109,19 @@
         <div class="nav-actions">
           <BaseToggle v-model="isDark" class="desktop-only">
             <template #icon>
-              <component :is="ThemeIcon" :size="14" />
+              <i :class="themeIconClass" style="font-size: 0.8rem"></i>
             </template>
           </BaseToggle>
 
           <button
             class="mobile-menu-btn"
-            aria-label="Abrir menú"
+            aria-label="Menú"
             @click.stop="isMenuOpen = !isMenuOpen"
           >
-            <component :is="isMenuOpen ? X : Menu" :size="24" />
+            <i
+              :class="isMenuOpen ? 'pi pi-times' : 'pi pi-bars'"
+              style="font-size: 1.5rem"
+            ></i>
           </button>
         </div>
       </div>
@@ -133,7 +137,7 @@
 </template>
 
 <style scoped>
-  /* --- 1. ESTRUCTURA Y LAYOUT --- */
+  /* --- ESTRUCTURA Y LAYOUT --- */
   .header {
     position: fixed;
     top: 20px;

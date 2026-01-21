@@ -38,13 +38,13 @@
   --space-5xl: 6rem;
 
   /* Icon Sizes */
-  --icon-size-xs: 0.75rem; /* 12px - Para labels muy pequeñas */
-  --icon-size-sm: 1rem; /* 16px - Tamaño estándar para botones pequeños */
-  --icon-size-md: 1.25rem; /* 20px - Tamaño ideal para inputs y listas */
-  --icon-size-base: 1.5rem; /* 24px - El estándar "por defecto" */
-  --icon-size-lg: 2rem; /* 32px - Para destacados o secciones hero */
-  --icon-size-xl: 2.5rem; /* 40px - Para ilustraciones */
-  --icon-size-2xl: 3rem; /* 48px - Tamaño grande para énfasis */
+  --icon-size-xs: 0.75rem; /* 12px */
+  --icon-size-sm: 1rem; /* 16px */
+  --icon-size-md: 1.25rem; /* 20px */
+  --icon-size-base: 1.5rem; /* 24px */
+  --icon-size-lg: 2rem; /* 32px */
+  --icon-size-xl: 2.5rem; /* 40px */
+  --icon-size-2xl: 3rem; /* 48px */
 
   /* Layout */
   --container-max-width: 75rem;
