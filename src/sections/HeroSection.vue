@@ -70,13 +70,13 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
   import RobotSkeleton from '@/components/ui/RobotSkeleton.vue'
-  import cv from '@/assets/CV_Tarapues_Daniela.pdf'
 
   const isRobotLoaded = ref(false)
 
   const handleRobotLoad = () => {
     isRobotLoaded.value = true
   }
+  const cv = '/CV_Tarapues_Daniela.pdf'
 
   onMounted(() => {
     // Respaldo de seguridad por si Spline tarda mucho
