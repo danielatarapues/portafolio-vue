@@ -11,62 +11,57 @@ export function useContact() {
   })
 
   const sendEmail = async (formData: ContactFormData) => {
-    const apiUrl = import.meta.env.VITE_API_URL
-    // Validación preventiva
-    if (!apiUrl || apiUrl.includes('undefined')) {
-      toast.value = {
-        show: true,
-        type: 'error',
-        title: 'Error de configuración',
-        message:
-          'La URL del servidor no está definida. Por favor, intenta más tarde.',
-      }
-      return false
-    }
+    // 1. Configuración del servicio externo (FormSubmit)
+    const YOUR_EMAIL = "daniela.tarapues232@gmail.com" 
+    const formSubmitUrl = `https://formsubmit.co/ajax/${YOUR_EMAIL}`
 
     isSubmitting.value = true
 
-    // 1. Creamos el controlador para abortar la petición
+    // (Timeout de 8 segundos por si el servicio tarda)
     const controller = new AbortController()
-    // 2. Definimos un tiempo límite (ej. 5000ms = 5 segundos)
-    const timeoutId = setTimeout(() => controller.abort(), 5000)
+    const timeoutId = setTimeout(() => controller.abort(), 8000)
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL
-
-      const response = await fetch(`${apiUrl}/send-email`, {
+      const response = await fetch(formSubmitUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-        signal: controller.signal, // 3. Pasamos la señal al fetch
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          ...formData,
+          _subject: `Nuevo mensaje de: ${formData.name}`, // Asunto personalizado para bandeja
+        }),
+        signal: controller.signal,
       })
 
-      // Limpiamos el timer si la respuesta llega a tiempo
       clearTimeout(timeoutId)
 
       if (!response.ok) throw new Error()
 
+      // Éxito
       toast.value = {
         show: true,
         type: 'success',
-        title: '¡Mensaje recibido!',
-        message: 'Me pondré en contacto contigo pronto.',
+        title: '¡Mensaje enviado!',
+        message: `Gracias por escribirme, ${formData.name}. Te responderé muy pronto.`,
       }
       return true
+
     } catch (error: unknown) {
-      clearTimeout(timeoutId) // También limpiamos en caso de error
+      clearTimeout(timeoutId)
 
-      let errorMsg = 'No pudimos conectar con el servidor.'
-
-      // Personalizamos el mensaje si fue por timeout
+      let errorMsg = 'Hubo un problema al procesar el envío.'
+      
       if (error instanceof Error && error.name === 'AbortError') {
-        errorMsg = 'No te preocupes, puedes contactarme directamente aquí:'
+        errorMsg = 'La conexión tardó demasiado. Por favor, intenta de nuevo.'
       }
 
+      // Error
       toast.value = {
         show: true,
         type: 'error',
-        title: 'Error al enviar el mensaje',
+        title: 'Error de envío',
         message: errorMsg,
       }
       return false
