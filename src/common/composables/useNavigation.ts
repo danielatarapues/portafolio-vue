@@ -1,4 +1,3 @@
-// src/common/composables/useNavigation.ts
 import { ref, onMounted, computed } from 'vue'
 
 // Usamos <T extends string> para que reconozca SectionName

@@ -12,7 +12,7 @@ export function useContact() {
 
   const sendEmail = async (formData: ContactFormData) => {
     // 1. Configuración del servicio externo (FormSubmit)
-    const YOUR_EMAIL = "daniela.tarapues232@gmail.com" 
+    const YOUR_EMAIL = import.meta.env.VITE_CONTACT_EMAIL
     const formSubmitUrl = `https://formsubmit.co/ajax/${YOUR_EMAIL}`
 
     isSubmitting.value = true
@@ -24,9 +24,9 @@ export function useContact() {
     try {
       const response = await fetch(formSubmitUrl, {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          Accept: 'application/json',
         },
         body: JSON.stringify({
           ...formData,
@@ -47,12 +47,11 @@ export function useContact() {
         message: `Gracias por escribirme, ${formData.name}. Te responderé muy pronto.`,
       }
       return true
-
     } catch (error: unknown) {
       clearTimeout(timeoutId)
 
       let errorMsg = 'Hubo un problema al procesar el envío.'
-      
+
       if (error instanceof Error && error.name === 'AbortError') {
         errorMsg = 'La conexión tardó demasiado. Por favor, intenta de nuevo.'
       }
